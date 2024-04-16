@@ -17,7 +17,7 @@ namespace Demoblaze_Selenium.utils
         public static string[] allProducts = { "Nokia Lumia 1520", "MacBook Pro" };
     
         // Data file Path
-        public static string e2eTestCaseDataPath = @"..\..\Data\e2e.csv";
+        public static string e2eTestCaseDataPath = @"..\..\Data\e2eTestData.csv";
 
         // Test Reports Path
         public static string testReportPath = @"..\..\Reports\EndToEndTestReport.html";

@@ -18,7 +18,7 @@ namespace Demoblaze_Selenium.Tests
         private HomePage homePage;
         private ProductPage productPage;
         private CartPage cartPage;
-
+        
         [SetUp]
         public void Setup()
         {
@@ -31,30 +31,30 @@ namespace Demoblaze_Selenium.Tests
             homePage = new HomePage(driver, test);
             productPage = new ProductPage(driver, test);
             cartPage = new CartPage(driver, test);
-                    }
+        }
         private static IEnumerable<TestCaseData> GetTestCases()
         {
-            string filePath = GlobalValues.e2eTestCaseDataPath;
-            return FileTestDataReader.CreateTestCases(filePath);
+            return FileTestDataReader.CreateTestCases(GlobalValues.e2eTestCaseDataPath);
         }
 
         [Test]
         [TestCaseSource(nameof(GetTestCases))]
-        public void VerifyEndToEndCheckoutProcess( string validUsername,
-                                                   string validPassword,
-                                                   string phonesCategory,
-                                                   string nokiaPhone,
-                                                   string laptopsCategory,
-                                                   string appleLaptop,
-                                                   string name,
-                                                   string country,
-                                                   string city,
-                                                   string creditCard,
-                                                   string month,
-                                                   string year,
-                                                   string conformationMessage
-                                                 )
+        public void VerifyEndToEndCheckoutProcess(TestDataModel testDataModel)
         {
+            string validUsername = testDataModel.ValidUsername;
+            string validPassword = testDataModel.ValidPassword;
+            string phonesCategory = testDataModel.PhonesCategory;
+            string nokiaPhone = testDataModel.NokiaPhone;
+            string laptopsCategory = testDataModel.LaptopsCategory;
+            string appleLaptop = testDataModel.AppleLaptop;
+            string name = testDataModel.Name;
+            string country = testDataModel.Country;
+            string city = testDataModel.City;
+            string creditCard = testDataModel.CreditCard;
+            string month = testDataModel.Month;
+            string year = testDataModel.Year;
+            string conformationMessage = testDataModel.ConformationMessage;
+
             // Start the test
             test.Log(Status.Info, "Starting the End-to-End Checkout Process");
 
@@ -87,17 +87,16 @@ namespace Demoblaze_Selenium.Tests
 
             // Validate CartPage, fill out the order form 
             test.Log(Status.Info, "Validate Cart Page Content");
-            cartPage.ValidatePageContent(validUsername);            
+            cartPage.ValidatePageContent(validUsername);
             cartPage.ClickPlaceOrderButton();
             test.Log(Status.Info, "Filling out the order form");
             cartPage.FillPlaceOrderForm(name, country, city, creditCard, month, year);
             test.Log(Status.Info, "Validating Purchase Confirmation");
             cartPage.ValidatePurchaseConformationForm(creditCard, name, conformationMessage);
-            
+
             // LogOut
             homePage.LogOut();
             test.Log(Status.Pass, "Test passed");
-
         }
 
         [TearDown]

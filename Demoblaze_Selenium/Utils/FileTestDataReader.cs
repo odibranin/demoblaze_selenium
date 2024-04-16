@@ -1,13 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using NUnit.Framework;
 
 namespace Demoblaze_Selenium.utils
 {
     public class FileTestDataReader
     {
-        public static List<TestCaseData> CreateTestCases(string filePath)
+        public static IEnumerable<TestCaseData> CreateTestCases(string filePath)
         {
-            var testCases = new List<TestCaseData>();
+            var testDataList = ReadTestData(filePath);
+
+            foreach (var data in testDataList)
+            {
+                var testCaseData = new TestCaseData(data);
+                yield return testCaseData;
+            }
+        }
+
+        private static IEnumerable<TestDataModel> ReadTestData(string filePath)
+        {
+            var testDataList = new List<TestDataModel>();
 
             using (var fs = File.OpenRead(filePath))
             using (var sr = new StreamReader(fs))
@@ -15,13 +28,21 @@ namespace Demoblaze_Selenium.utils
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    string[] tests = line.Split(',');
-                    var testCase = new TestCaseData(tests);
-                    testCases.Add(testCase);
+                    string[] keyValuePairs = line.Split(',');
+                    var testDataModel = new TestDataModel();
+
+                    PropertyInfo[] properties = typeof(TestDataModel).GetProperties();
+
+                    for (int i = 0; i < properties.Length && i < keyValuePairs.Length; i++)
+                    {
+                        properties[i].SetValue(testDataModel, keyValuePairs[i]);
+                    }
+
+                    testDataList.Add(testDataModel);
                 }
             }
 
-            return testCases;
+            return testDataList;
         }
     }
 }

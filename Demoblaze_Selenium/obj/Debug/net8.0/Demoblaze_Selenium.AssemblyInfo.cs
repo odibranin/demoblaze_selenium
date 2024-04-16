@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Demoblaze_Selenium")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff950d8ebc6898afac900fd06ac74528605e7748")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e1efd27ee46199eb05489bbcb699b2a6c3fe764")]
 [assembly: System.Reflection.AssemblyProductAttribute("Demoblaze_Selenium")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Demoblaze_Selenium")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
